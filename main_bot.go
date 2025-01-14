@@ -32,7 +32,7 @@ func main() {
 	if err != nil {
 		log.Println(err.Error())
 	} else {
-		os.Chdir("DataBase")
+		os.Chdir("./data/DataBase")
 	}
 	b.Start(ctx)
 
