@@ -14,6 +14,7 @@ import (
 )
 
 func main() {
+	os.Chdir("./Data")
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
@@ -28,11 +29,11 @@ func main() {
 		panic(err)
 	}
 	print("now b.Start!!!!\n")
-	err = os.Mkdir("Data/DataBase", 0755)
+	err = os.Mkdir("DataBase", 0755)
 	if err != nil {
 		log.Println(err.Error())
 	} else {
-		os.Chdir("./Data/DataBase")
+		os.Chdir("./DataBase")
 	}
 	b.Start(ctx)
 
