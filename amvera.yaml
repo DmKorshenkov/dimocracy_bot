@@ -1,0 +1,5 @@
+meta:
+  environment: golang
+  toolchain:
+    name: go
+  version: 1.23.2

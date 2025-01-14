@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"os"
 	"os/signal"
 
@@ -27,8 +28,12 @@ func main() {
 		panic(err)
 	}
 	print("now b.Start!!!!\n")
-	os.Chdir("DataBase")
-
+	err = os.Mkdir("DataBase", 0755)
+	if err != nil {
+		log.Println(err.Error())
+	} else {
+		os.Chdir("DataBase")
+	}
 	b.Start(ctx)
 
 }
