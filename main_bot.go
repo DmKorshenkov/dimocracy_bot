@@ -28,11 +28,11 @@ func main() {
 		panic(err)
 	}
 	print("now b.Start!!!!\n")
-	err = os.Mkdir("DataBase", 0755)
+	err = os.Mkdir("Data/DataBase", 0755)
 	if err != nil {
 		log.Println(err.Error())
 	} else {
-		os.Chdir("./data/DataBase")
+		os.Chdir("./Data/DataBase")
 	}
 	b.Start(ctx)
 
