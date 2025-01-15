@@ -13,5 +13,5 @@ func Token() string {
 		panic(err)
 	}
 
-	return os.Getenv("dimocracy")
+	return os.Getenv("test")
 }

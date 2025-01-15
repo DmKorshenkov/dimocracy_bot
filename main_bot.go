@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"log"
 	"os"
 	"os/signal"
 
@@ -14,7 +13,6 @@ import (
 )
 
 func main() {
-	os.Chdir("./Data")
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt)
 	defer cancel()
 
@@ -29,34 +27,22 @@ func main() {
 		panic(err)
 	}
 	print("now b.Start!!!!\n")
-	err = os.Mkdir("DataBase", 0755)
-	if err != nil {
-		log.Println(err.Error())
-	} else {
-		os.Chdir("./DataBase")
-	}
 	b.Start(ctx)
 
 }
 
 func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
-	if update.Message == nil {
-		return
+	if update.Message.Chat.ID == 404531178 && update.Message.Text == "start" {
+		b.SendMessage(ctx, &bot.SendMessageParams{
+			ChatID: 404531178,
+			Text:   fnc.Start() + "\n start success\n",
+		})
+	} else {
+		answer := in.In(update.Message.Text)
+		b.SendMessage(ctx, &bot.SendMessageParams{
+			ChatID: update.Message.Chat.ID,
+			Text:   answer,
+		})
 	}
-	var ch = make(chan string, 2)
-	go fnc.UpDayRate(ch)
-	answer := in.In(update.Message.Text)
 
-	b.SendMessage(ctx, &bot.SendMessageParams{
-		ChatID: update.Message.Chat.ID,
-		Text:   answer,
-	})
-	if val, ok := <-ch; ok {
-		if val != "" {
-			b.SendMessage(ctx, &bot.SendMessageParams{
-				ChatID: 404531178,
-				Text:   val,
-			})
-		}
-	}
 }

@@ -1,0 +1,32 @@
+{
+	"25": {
+		"1": {
+			"15": {
+				"1": [
+					{
+						"Name": "chicken",
+						"Energy Value": {
+							"Prot": 21,
+							"Fat": 3,
+							"Carb": 0,
+							"Cal": 111,
+							"W": {
+								"Weight": 100
+							}
+						}
+					},
+					{
+						"Name": "БЖУ",
+						"Energy Value": {
+							"Prot": 21,
+							"Fat": 3,
+							"Carb": 0,
+							"Cal": 111,
+							"W": {}
+						}
+					}
+				]
+			}
+		}
+	}
+}

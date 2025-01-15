@@ -1,7 +1,9 @@
 package check
 
 import (
+	"fmt"
 	"log"
+	"os"
 	"strconv"
 	"strings"
 
@@ -23,6 +25,9 @@ func Prod(data string) []o.Prod {
 			log.Println("CheckProd Number == false")
 			return nil
 		}
+		dir, _ := os.Getwd()
+		fmt.Println()
+		fmt.Println("in check prod -- ", dir)
 		if o.MemFood(slStr[0]) == nil {
 			log.Println("CheckProd MemFood == msg[i] not found in list foods")
 			return nil

@@ -2,6 +2,8 @@ package o
 
 import (
 	"encoding/json"
+	"fmt"
+	"log"
 	"os"
 )
 
@@ -56,11 +58,19 @@ func RemFood(prod ...Food) {
 }
 
 func MemFood(name string) *Ev {
+	fmt.Println(name)
 	var tmp = make(map[string]Ev)
-	data, _ := os.ReadFile("product.json")
+	data, err := os.ReadFile("product.json")
+	if err != nil {
+		log.Println(err.Error())
+	}
 	//	fmt.Println(string(data))
-	json.Unmarshal(data, &tmp)
+	err = json.Unmarshal(data, &tmp)
+	if err != nil {
+		log.Println(err.Error())
+	}
 	//	fmt.Println(tmp[name])
+	fmt.Println(tmp)
 	if val, ok := tmp[name]; ok {
 		return &val
 	} else {

@@ -98,6 +98,7 @@ func (i *I) PI() {
 }
 
 func In(msg string) string {
+
 	var i = NewI()
 
 	checK, got := func() ([]string, []string) {
@@ -118,7 +119,7 @@ func In(msg string) string {
 	}
 
 	if len(got) > 1 {
-		i.data = got[1]
+		i.data = strings.ToLower(got[1])
 	}
 
 	switch i.req {
