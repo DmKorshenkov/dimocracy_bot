@@ -1,19 +1,20 @@
 package fnc
 
 import (
-	"fmt"
 	"log"
 	"os"
 )
 
 func Start() string {
 	dirs, err := os.ReadDir("./")
+	var str string
 	if err != nil {
 		wd, _ := os.Getwd()
 		log.Println(err.Error(), "\n", wd)
 	}
 	for _, dir := range dirs {
-		fmt.Println(dir.Name())
+		str += dir.Name() + "\n"
+		log.Println(dir.Name())
 		if dir.Name() == "Data" || dir.Name() == "data" {
 			os.Chdir(dir.Name())
 			wd, _ := os.Getwd()
@@ -30,5 +31,5 @@ func Start() string {
 		}
 	}
 	wd, _ := os.Getwd()
-	return wd
+	return wd + "\n" + str
 }
