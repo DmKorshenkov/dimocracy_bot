@@ -11,7 +11,7 @@ import (
 func UpDayRate(ch chan string) {
 	for {
 		var t = time.Now()
-		if h, m, s := t.Clock(); h == 19 && m == 20 && s == 0 {
+		if h, m, s := t.Clock(); h == 19 && m == 45 && s == 0 {
 			check := BackRate()
 			if check != "" {
 				ch <- check
@@ -34,5 +34,5 @@ func BackRate() string {
 
 	_, _ = f.Write(data)
 	_ = f.Close()
-	return ""
+	return "rate up success"
 }

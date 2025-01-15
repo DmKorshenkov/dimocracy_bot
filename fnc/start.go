@@ -1,22 +1,34 @@
 package fnc
 
 import (
+	"fmt"
 	"log"
 	"os"
 )
 
 func Start() string {
-	err := os.Chdir("./Data")
+	dirs, err := os.ReadDir("./")
 	if err != nil {
-		dir, _ := os.Getwd()
-		log.Println(err.Error(), "\n", dir)
+		wd, _ := os.Getwd()
+		log.Println(err.Error(), "\n", wd)
 	}
-	os.Mkdir("DataBase", 0755)
-	err = os.Chdir("./DataBase")
-	dir, _ := os.Getwd()
-	if err != nil {
-		log.Println(err.Error())
-		return err.Error() + "\n" + dir
+	for _, dir := range dirs {
+		fmt.Println(dir.Name())
+		if dir.Name() == "Data" || dir.Name() == "data" {
+			os.Chdir(dir.Name())
+			wd, _ := os.Getwd()
+			log.Println(wd)
+			err := os.Mkdir("DataBase", 0755)
+			if err != nil {
+				return err.Error() + "\n" + wd
+			}
+			err = os.Chdir("./DataBase")
+			wd, _ = os.Getwd()
+			if err != nil {
+				return err.Error() + "\n" + wd
+			}
+		}
 	}
-	return dir
+	wd, _ := os.Getwd()
+	return wd
 }
