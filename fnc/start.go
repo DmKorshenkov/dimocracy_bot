@@ -6,16 +6,15 @@ import (
 )
 
 func Start() string {
+	os.Chdir("../")
 	dirs, err := os.ReadDir("./")
-	var str string
 	if err != nil {
 		wd, _ := os.Getwd()
 		log.Println(err.Error(), "\n", wd)
 	}
 	for _, dir := range dirs {
-		str += dir.Name() + "\n"
 		log.Println(dir.Name())
-		if dir.Name() == "Data" || dir.Name() == "data" {
+		if dir.Name() == "/Data" || dir.Name() == "/data" || dir.Name() == "Data" || dir.Name() == "/data" {
 			os.Chdir(dir.Name())
 			wd, _ := os.Getwd()
 			log.Println(wd)
@@ -31,5 +30,5 @@ func Start() string {
 		}
 	}
 	wd, _ := os.Getwd()
-	return wd + "\n" + str
+	return wd
 }

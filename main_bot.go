@@ -38,7 +38,7 @@ func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
 	if update.Message.Chat.ID == 404531178 && update.Message.Text == "start" {
 		b.SendMessage(ctx, &bot.SendMessageParams{
 			ChatID: 404531178,
-			Text:   fnc.Start() + "\n start success\n",
+			Text:   fnc.Start(),
 		})
 	} else {
 		answer := in.In(update.Message.Text)
