@@ -16,7 +16,7 @@ func NewFood() *Food {
 	return &Food{}
 }
 
-func SetFood(name string, EnergyValue Ev) *Food {
+func NewSetFood(name string, EnergyValue Ev) *Food {
 	return &Food{Name: name, EnergyValue: EnergyValue}
 }
 
@@ -86,7 +86,7 @@ func MemAllFood() []Food {
 	var slProd = make([]Food, 0, len(tmp))
 
 	for name, EnergyValue := range tmp {
-		slProd = append(slProd, *SetFood(name, EnergyValue))
+		slProd = append(slProd, *NewSetFood(name, EnergyValue))
 	}
 	return slProd
 }

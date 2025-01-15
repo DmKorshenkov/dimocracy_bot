@@ -55,8 +55,7 @@ func help(data string) *o.Food {
 
 	meal := o.SetEv(slf64[0], slf64[1], slf64[2], slf64[3])
 	meal.Round()
-	o.SetFood(slice[0], *meal)
-	return o.SetFood(slice[0], *meal)
+	return o.NewSetFood(slice[0], *meal)
 }
 
 func MemFood(str string) {

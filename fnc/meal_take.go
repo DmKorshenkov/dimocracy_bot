@@ -23,7 +23,7 @@ func MealTake(p ...o.Prod) []o.Food {
 	for _, food := range mealTake {
 		sumev.SumEv(food.EnergyValue)
 	}
-	mealTake = append(mealTake, *o.SetFood("БЖУ", sumev))
+	mealTake = append(mealTake, *o.NewSetFood("БЖУ", sumev))
 	//RemRateDay
 	func() {
 		rate := *o.MemRate()
@@ -39,7 +39,7 @@ func getFood(food o.Prod) o.Food {
 	// get food
 	f := o.MemFood(food.Name)
 	f.SetOneGram().SetPortion(food.Weight)
-	return *(o.SetFood(food.Name, *f))
+	return *(o.NewSetFood(food.Name, *f))
 
 }
 
@@ -55,14 +55,14 @@ func RemMeal(e []o.Food) {
 			key = len(mp[y][m][d]) + 1
 
 			for _, val := range e {
-				ymd.ValInMap(mp, ymd.ConvDateNow(), int(key), val)
+				ymd.Set(mp, int(key), val)
 			}
 			//	fmt.Println("data!=0")
 		}
 	} else {
 
 		for _, val := range e {
-			ymd.ValInMap(mp, ymd.ConvDateNow(), int(key), val)
+			ymd.Set(mp, int(key), val)
 		}
 		//	fmt.Println("data==0")
 	}

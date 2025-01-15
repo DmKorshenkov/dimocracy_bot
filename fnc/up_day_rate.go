@@ -11,7 +11,7 @@ import (
 func UpDayRate(ch chan string) {
 	for {
 		var t = time.Now()
-		if h, m, s := t.Clock(); h == 0 && m == 0 && s == 0 {
+		if h, m, s := t.Clock(); h == 19 && m == 20 && s == 0 {
 			check := BackRate()
 			if check != "" {
 				ch <- check
@@ -24,7 +24,7 @@ func UpDayRate(ch chan string) {
 func BackRate() string {
 	data, _ := os.ReadFile("rate.json")
 	if len(data) == 0 {
-		return "rate not found or BackRate has another problem"
+		return "UpDayRate error\n\n -- rate not found or BackRate has another problem"
 	}
 	var tmp o.Rate
 	json.Unmarshal(data, &tmp)

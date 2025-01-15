@@ -18,7 +18,7 @@ func NewEv() *Ev {
 	return &Ev{}
 }
 func SetEv(p float64, f float64, c float64, fb float64) *Ev {
-	return &Ev{P: p, F: f, C: c, Fb: fb, Cal: p*4 + f*9 + c*4 + fb*1.2, W: *SetW(100, "")}
+	return &Ev{P: p, F: f, C: c, Fb: fb, Cal: p*4 + f*9 + c*4 + fb*1.2, W: *NewSetW(100, "")}
 }
 func (Ev *Ev) SetEv(p float64, f float64, c float64, fb float64) {
 	Ev.P = p

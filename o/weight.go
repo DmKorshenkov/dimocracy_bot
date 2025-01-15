@@ -17,7 +17,7 @@ func NewW() *Weight {
 	return &Weight{}
 }
 
-func SetW(weight float64, info string) *Weight {
+func NewSetW(weight float64, info string) *Weight {
 	return &Weight{Weight: weight, Info: info}
 }
 
@@ -48,7 +48,7 @@ func RemWeight(w Weight) {
 		_ = json.Unmarshal(data, &mp)
 		fmt.Println(mp)
 	}
-	_ = ymd.ValInMap[string, Weight](mp, ymd.ConvDateNow(), w.Info, w)
+	_ = ymd.Set[string, Weight](mp, w.Info, w)
 	fmt.Println(mp)
 	data, err = json.MarshalIndent(mp, "", "	")
 	if err != nil {

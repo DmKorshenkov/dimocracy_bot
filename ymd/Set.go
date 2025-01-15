@@ -4,30 +4,21 @@ import (
 	"fmt"
 )
 
-func ValFromMap[K comparable, V any](mp map[int]map[int]map[int]map[K][]V, ymd int, k K) []V {
-	y, m, d := ConvDateYMD(ymd)
-	if val, ok := mp[y][m][d][k]; ok {
-		return val
-	} else {
-		return nil
-	}
-}
-
-func ValInMap[K comparable, V any](mp map[int]map[int]map[int]map[K][]V, ymd int, k K, val V) map[int]map[int]map[int]map[K][]V {
+func Set[K comparable, V any](mp map[int]map[int]map[int]map[K][]V, k K, val V) map[int]map[int]map[int]map[K][]V {
 	if mp == nil {
 		mp = make(map[int]map[int]map[int]map[K][]V)
 	}
-	y, m, d := ConvDateYMD(ymd)
+	y, m, d := ConvDateYMD(ConvDateNow())
 	tmp := mp
 	if tmp[y] == nil || tmp[y][m] == nil || tmp[y][m][d] == nil || tmp[y][m][d][k] == nil {
-		tmp[y] = Mmp(tmp[y], m, d, k, val)
+		tmp[y] = mmp(tmp[y], m, d, k, val)
 	} else {
 		tmp[y][m][d][k] = append(tmp[y][m][d][k], val)
 	}
 	mp = tmp
 	return mp
 }
-func Mmp[K comparable, V any](mp map[int]map[int]map[K][]V, m, d int, k K, val V) map[int]map[int]map[K][]V {
+func mmp[K comparable, V any](mp map[int]map[int]map[K][]V, m, d int, k K, val V) map[int]map[int]map[K][]V {
 	if mp == nil {
 		mp = make(map[int]map[int]map[K][]V)
 	}

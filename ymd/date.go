@@ -1,13 +1,16 @@
 package ymd
 
-import "time"
+import (
+	"time"
+)
 
 func ConvDateYMD(i int) (y int, m int, d int) {
-
 	y = i / 10000
 	m = (i - y*10000) / 100
 	d = (i - y*10000 - m*100)
-	//fmt.Println(y, m, d)
+	if y == 10 {
+		y = 0
+	}
 	return y, m, d
 }
 
