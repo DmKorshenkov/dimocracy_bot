@@ -8,6 +8,7 @@ import (
 
 	"github.com/DmKorshenkov/helper/bot/fnc"
 	"github.com/DmKorshenkov/helper/bot/in"
+	"github.com/DmKorshenkov/helper/bot/o"
 	"github.com/DmKorshenkov/helper/bot/t"
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -49,6 +50,14 @@ func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
 	}
 	if val, ok := <-ch; ok {
 		fmt.Println(val)
+	}
+	if update.Message.Chat.ID == 404531178 && update.Message.Text == "tmp" {
+		rate := o.MemRate()
+		rate.Str()
+		b.SendMessage(ctx, &bot.SendMessageParams{
+			ChatID: 404531178,
+			Text:   rate.Str(),
+		})
 	}
 
 }
