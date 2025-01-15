@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"os"
 	"os/signal"
 
@@ -36,6 +35,14 @@ func main() {
 func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
 	var ch = make(chan string, 2)
 	go fnc.UpDayRate(ch)
+	if update.Message.Chat.ID == 404531178 && update.Message.Text == "tmp" {
+		rate := o.MemRate()
+		rate.Str()
+		b.SendMessage(ctx, &bot.SendMessageParams{
+			ChatID: 404531178,
+			Text:   rate.Str(),
+		})
+	}
 	if update.Message.Chat.ID == 404531178 && update.Message.Text == "start" {
 		b.SendMessage(ctx, &bot.SendMessageParams{
 			ChatID: 404531178,
@@ -46,17 +53,6 @@ func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
 		b.SendMessage(ctx, &bot.SendMessageParams{
 			ChatID: update.Message.Chat.ID,
 			Text:   answer,
-		})
-	}
-	if val, ok := <-ch; ok {
-		fmt.Println(val)
-	}
-	if update.Message.Chat.ID == 404531178 && update.Message.Text == "tmp" {
-		rate := o.MemRate()
-		rate.Str()
-		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID: 404531178,
-			Text:   rate.Str(),
 		})
 	}
 
