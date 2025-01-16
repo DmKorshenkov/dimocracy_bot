@@ -6,9 +6,6 @@ import (
 	"os"
 	"os/signal"
 
-	"github.com/DmKorshenkov/helper/bot/fnc"
-	"github.com/DmKorshenkov/helper/bot/in"
-	"github.com/DmKorshenkov/helper/bot/o"
 	"github.com/DmKorshenkov/helper/bot/t"
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -29,32 +26,47 @@ func main() {
 		panic(err)
 	}
 	print("now b.Start!!!!\n")
+	err = os.Chdir("./data")
+	if err != nil {
+		log.Println(err.Error())
+	}
+	os.Create("weight.json")
+	os.Create("rate.json")
+	os.Create("ratetmp.json")
+	os.Create("mealtake.json")
 	b.Start(ctx)
 
 }
 
 func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
-	var ch = make(chan string, 2)
-	go fnc.UpDayRate(ch)
-	if update.Message.Chat.ID == 404531178 && update.Message.Text == "start" {
+	if admin(update.Message) {
+		dir, _ := os.Getwd()
 		b.SendMessage(ctx, &bot.SendMessageParams{
 			ChatID: 404531178,
-			Text:   fnc.Start(),
+			Text:   dir,
 		})
-	} else if update.Message.Chat.ID == 404531178 && update.Message.Text == "test rate" {
-		log.Println("!!!!!!")
-		rate := o.MemRate()
-		rate.Str()
-		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID: 404531178,
-			Text:   rate.Str(),
-		})
-	} else {
-		answer := in.In(update.Message.Text)
-		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID: update.Message.Chat.ID,
-			Text:   answer,
-		})
+		dirs, _ := os.ReadDir("./")
+		for _, d := range dirs {
+			b.SendMessage(ctx, &bot.SendMessageParams{
+				ChatID: 404531178,
+				Text:   d.Name(),
+			})
+			if d.Name() == "data" {
+				err := os.Chdir(d.Name())
+				if err != nil {
+					log.Println(err.Error())
+				}
+				dir, _ = os.Getwd()
+				b.SendMessage(ctx, &bot.SendMessageParams{
+					ChatID: 404531178,
+					Text:   dir,
+				})
+			}
+		}
 	}
+	log.Println("end handler")
+}
 
+func admin(get *models.Message) bool {
+	return get.From.ID == 404531178
 }

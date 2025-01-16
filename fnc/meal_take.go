@@ -30,7 +30,7 @@ func MealTake(p ...o.Prod) []o.Food {
 		rate.DiffEv(sumev)
 		rate.Round()
 		fmt.Println(rate)
-		//o.RemRateDay(rate)
+		o.RemRateDay(rate)
 	}()
 	return mealTake
 }
