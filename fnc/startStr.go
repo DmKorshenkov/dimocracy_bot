@@ -13,5 +13,12 @@ func StartStr() string {
 	} else {
 		log.Println("success")
 	}
+	err = os.Chdir("./DataBase")
+	if err != nil {
+		log.Println(err.Error())
+		return err.Error()
+	} else {
+		log.Println("success")
+	}
 	return "start is success"
 }

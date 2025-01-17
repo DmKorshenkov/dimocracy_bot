@@ -47,26 +47,34 @@ func (w *Weight) Str() string {
 	return fmt.Sprintf("weight - %v\ninfo - %v", w.Weight, w.Info)
 }
 
-func RemWeight(w Weight) {
+func RemWeight(w Weight) string {
 	f, err := os.OpenFile("weight.json", os.O_CREATE|os.O_RDWR, 0666)
 	if err != nil {
-		panic(err.Error())
+		return err.Error()
 	}
 	mp := make(map[int]map[int]map[int]map[string][]Weight)
-	data, _ := os.ReadFile("weight.json")
+	data, err := os.ReadFile("weight.json")
+	if err != nil {
+		return err.Error()
+	}
 	if len(data) != 0 {
-		_ = json.Unmarshal(data, &mp)
-		fmt.Println(mp)
+		err = json.Unmarshal(data, &mp)
+		if err != nil {
+			return err.Error()
+		}
 	}
 	_ = ymd.Set[string, Weight](mp, w.Info, w)
-	fmt.Println(mp)
 	data, err = json.MarshalIndent(mp, "", "	")
 	if err != nil {
-		fmt.Println("!")
+		return err.Error()
 	}
-	n, _ := f.Write(data)
-	if n != len(data) {
-		fmt.Println("n!=data")
+	n, err := f.Write(data)
+	if n != len(data) || err != nil {
+		return "n, err != f.Write(data) RemWeight 72"
 	}
-	_ = f.Close()
+	err = f.Close()
+	if err != nil {
+		return err.Error()
+	}
+	return "rem weight success\n"
 }

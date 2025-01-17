@@ -5,7 +5,6 @@ import (
 	"strings"
 
 	"github.com/DmKorshenkov/helper/bot/check"
-	"github.com/DmKorshenkov/helper/bot/fnc"
 	"github.com/DmKorshenkov/helper/bot/o"
 )
 
@@ -97,7 +96,7 @@ func (i *I) PI() {
 	fmt.Println("i.key = ", i.key)
 }
 
-func In(msg string) string {
+func In(ch chan string, msg string) {
 
 	var i = NewI()
 
@@ -107,15 +106,19 @@ func In(msg string) string {
 		return cmdkey, get
 	}()
 	if len(checK) != 2 {
-		return "Упс)\nНеверное количество ключевых слов в команде.\n"
+		ch <- "Упс)\nНеверное количество ключевых слов в команде.\n"
+		close(ch)
+		return
 	}
 	i.NewI(checK[0], checK[1])
 	i.PI()
 	i.Check()
 	if i.req == 0 {
-		return "cmd/key!=true\n"
+		ch <- "cmd/key!=true\n"
+		close(ch)
+		return
 	} else {
-		fmt.Println("cmd/key==true")
+		ch <- ("cmd/key==true")
 	}
 
 	if len(got) > 1 {
@@ -127,48 +130,47 @@ func In(msg string) string {
 		//
 		weight := check.RemWeight(i.data)
 		if weight == nil {
-			return "(check.RemWeight==nil)\nОдин раз - не пидорас.\nНо, Братан, ты пидр!\nДавай! Попробуй еще раз!"
+			ch <- "(check.RemWeight==nil)\nОдин раз - не пидорас.\nНо, Братан, ты пидр!\nДавай! Попробуй еще раз!"
 		} else {
-			o.RemWeight(*weight)
+			ch <- o.RemWeight(*weight)
+			return
 		}
 	case 'm' + 'w':
 		// mem weight
-
 	case 'r' + 'f':
-		//
+		/*/
 		food := check.RemFood(i.data)
 		if len(food) == 0 {
 			return "(check.RemFood==len_0)\nОдин раз - не пидорас.\nНо, Братан, ты пидр!\nДавай! Попробуй еще раз!"
 		} else {
 			o.RemFood(food...)
-		}
+		}/*/
 	case 'r' + 'R':
-		//
+		/*/
 		rate := check.Rate(i.data)
 		if rate == nil {
 			return "(check.Rate==nil)\nОдин раз - не пидорас.\nНо, Братан, ты пидр!\nДавай! Попробуй еще раз!"
 		} else {
 			o.RemRate(*rate)
-		}
-
+		}/*/
 	case 'm' + 'R':
 		//mem rate
 
 	case 'r' + 'm':
-		//
+		/*/
 		prod := check.Prod(i.data)
 		if len(prod) == 0 {
 			return "(check.Prod==len_0)\nОдин раз - не пидорас.\nНо, Братан, ты пидр!\nДавай! Попробуй еще раз!"
 		} else {
 			meal := fnc.MealTake(prod...)
 			fnc.RemMeal(meal)
-		}
+		}/*/
 	case 'm' + 'm':
 		//mem meal
 
 	}
 
-	return "in.In(msg) - mission complete, bro)"
+	return
 }
 
 func helpTrim(str string) string {
