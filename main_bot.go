@@ -27,6 +27,7 @@ func main() {
 		panic(err)
 	}
 	print("now b.Start!!!!\n")
+	log.Println(os.Chdir("/data"))
 	log.Println(fnc.StartStr())
 	b.Start(ctx)
 
