@@ -17,16 +17,42 @@ type Ev struct {
 func NewEv() *Ev {
 	return &Ev{}
 }
+
+func (ev *Ev) Look() string {
+	var str string
+	ev.Round()
+	if ev.W.Weight != 0 {
+		str += fmt.Sprintf("Вес       - %-4.2f gram\n", ev.W.Weight)
+	}
+	if ev.P != 0 {
+		str += fmt.Sprintf("Белков    - %-4.2f gram\n", ev.P)
+	}
+	if ev.F != 0 {
+		str += fmt.Sprintf("Жиров     - %-4.2f gram\n", ev.F)
+	}
+	if ev.C != 0 {
+		str += fmt.Sprintf("Углеводов - %-4.2f gram\n", ev.C)
+	}
+	if ev.Fb != 0 {
+		str += fmt.Sprintf("Клетчатки - %-4.2f gram", ev.Fb)
+	}
+	if ev.Cal != 0 {
+		str += fmt.Sprintf("Калорий   - %-4.2f\n", ev.Cal)
+	}
+
+	return str
+}
 func SetEv(p float64, f float64, c float64, fb float64) *Ev {
 	return &Ev{P: p, F: f, C: c, Fb: fb, Cal: p*4 + f*9 + c*4 + fb*1.2, W: *NewSetW(100, "")}
 }
-func (Ev *Ev) SetEv(p float64, f float64, c float64, fb float64) {
-	Ev.P = p
-	Ev.F = f
-	Ev.C = c
-	Ev.Fb = fb
-	Ev.Cal = p*4 + f*9 + c*4 + fb*1.2
-	Ev.W.SetWeight(100)
+func (ev *Ev) SetEv(p float64, f float64, c float64, fb float64) *Ev {
+	ev.P = p
+	ev.F = f
+	ev.C = c
+	ev.Fb = fb
+	ev.Cal = p*4 + f*9 + c*4 + fb*1.2
+	ev.W.SetWeight(100)
+	return ev
 }
 
 func (ev *Ev) SetWeight(weight float64) *Ev {
@@ -64,9 +90,7 @@ func (Ev *Ev) Round() *Ev {
 	Ev.Cal = math.Round((Ev.Cal)*1000) / 1000
 	return Ev
 }
-func (Ev *Ev) Str() string {
-	return fmt.Sprintf("prot - %f\nfats - %f\ncarb - %f\nfiber - %f\ncalories - %f\n%s\n", Ev.P, Ev.F, Ev.C, Ev.Fb, Ev.Cal, Ev.W.Str())
-}
+
 func (Ev *Ev) SumEv(Ev2 Ev) Ev {
 	Ev.P += Ev2.P
 	Ev.F += Ev2.F

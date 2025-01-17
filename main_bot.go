@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/signal"
 
+	"github.com/DmKorshenkov/helper/bot/fnc"
 	"github.com/DmKorshenkov/helper/bot/t"
 	"github.com/go-telegram/bot"
 	"github.com/go-telegram/bot/models"
@@ -26,47 +27,16 @@ func main() {
 		panic(err)
 	}
 	print("now b.Start!!!!\n")
-	err = os.Chdir("./data")
-	if err != nil {
-		log.Println(err.Error())
-	}
-	os.Create("weight.json")
-	os.Create("rate.json")
-	os.Create("ratetmp.json")
-	os.Create("mealtake.json")
+	log.Println(fnc.StartStr())
 	b.Start(ctx)
 
 }
 
 func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
-	if admin(update.Message) {
-		dir, _ := os.Getwd()
-		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID: 404531178,
-			Text:   dir,
-		})
-		dirs, _ := os.ReadDir("./")
-		for _, d := range dirs {
-			b.SendMessage(ctx, &bot.SendMessageParams{
-				ChatID: 404531178,
-				Text:   d.Name(),
-			})
-			if d.Name() == "data" {
-				err := os.Chdir(d.Name())
-				if err != nil {
-					log.Println(err.Error())
-				}
-				dir, _ = os.Getwd()
-				b.SendMessage(ctx, &bot.SendMessageParams{
-					ChatID: 404531178,
-					Text:   dir,
-				})
-			}
-		}
-	}
+
 	log.Println("end handler")
 }
 
 func admin(get *models.Message) bool {
-	return get.From.ID == 404531178
+	return get.From.ID == 404531178 && get.Text == "start"
 }

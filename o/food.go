@@ -20,9 +20,10 @@ func NewSetFood(name string, EnergyValue Ev) *Food {
 	return &Food{Name: name, EnergyValue: EnergyValue}
 }
 
-func (o *Food) SetFood(name string, EnergyValue Ev) {
-	o.Name = name
-	o.EnergyValue = EnergyValue
+func (food *Food) SetFood(name string, EnergyValue Ev) *Food {
+	food.Name = name
+	food.EnergyValue = EnergyValue
+	return food
 }
 
 func (o *Food) SetName(name string) {
@@ -38,6 +39,13 @@ func (o *Food) Food_weight(weight float64) *Food {
 	o.EnergyValue.W.Weight = weight
 	//fmt.Println(o.Ev.W.Weight, "- after")
 	return o
+}
+
+func (o *Food) Look() string {
+	var str string
+	str += fmt.Sprintf("%s\n", o.Name)
+	str += o.EnergyValue.Look()
+	return str
 }
 
 func RemFood(prod ...Food) {

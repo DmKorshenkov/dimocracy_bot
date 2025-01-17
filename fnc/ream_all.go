@@ -1,0 +1,5 @@
+package fnc
+
+func ReamAll() {
+
+}

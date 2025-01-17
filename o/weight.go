@@ -16,6 +16,16 @@ type Weight struct {
 func NewW() *Weight {
 	return &Weight{}
 }
+func (w *Weight) Look() string {
+	var str string
+	if w.Weight != 0 {
+		str += fmt.Sprintf("Вес - %-4.2f", w.Weight)
+	}
+	if w.Info != "" {
+		str += fmt.Sprintf("%s", w.Info)
+	}
+	return str
+}
 
 func NewSetW(weight float64, info string) *Weight {
 	return &Weight{Weight: weight, Info: info}

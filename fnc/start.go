@@ -1,3 +1,0 @@
-package fnc
-
-func start() {}
