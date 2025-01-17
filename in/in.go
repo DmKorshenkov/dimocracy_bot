@@ -133,6 +133,7 @@ func In(ch chan string, msg string) {
 			ch <- "(check.RemWeight==nil)\nОдин раз - не пидорас.\nНо, Братан, ты пидр!\nДавай! Попробуй еще раз!"
 		} else {
 			ch <- o.RemWeight(*weight)
+			close(ch)
 			return
 		}
 	case 'm' + 'w':

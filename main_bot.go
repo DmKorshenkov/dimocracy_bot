@@ -41,10 +41,12 @@ func handler(ctx context.Context, b *bot.Bot, update *models.Update) {
 	if update.Message != nil && admin(update.Message) {
 		var ch = make(chan string)
 		go in.In(ch, update.Message.Text)
-		b.SendMessage(ctx, &bot.SendMessageParams{
-			ChatID: 404531178,
-			Text:   <-ch,
-		})
+		for val := range ch {
+			b.SendMessage(ctx, &bot.SendMessageParams{
+				ChatID: 404531178,
+				Text:   val,
+			})
+		}
 	}
 
 }
